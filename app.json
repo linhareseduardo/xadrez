@@ -9,9 +9,6 @@
       "resizeMode": "contain",
       "backgroundColor": "#312e2b"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.xadrez.app"
