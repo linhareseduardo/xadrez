@@ -1,0 +1,29 @@
+{
+  "expo": {
+    "name": "Xadrez",
+    "slug": "xadrez",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#312e2b"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.xadrez.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#312e2b"
+      },
+      "package": "com.xadrez.app"
+    },
+    "web": {
+      "bundler": "metro"
+    }
+  }
+}
