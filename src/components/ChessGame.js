@@ -4,15 +4,20 @@ import { ChessEngine } from '../engine/ChessEngine';
 import ChessBoard from './ChessBoard';
 
 const ChessGame = () => {
-  const [engine] = useState(() => new ChessEngine());
+  const [engine] = useState(() => {
+    const eng = new ChessEngine();
+    // Verificar estado inicial
+    eng.checkGameState();
+    return eng;
+  });
   const [board, setBoard] = useState(engine.board);
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [possibleMoves, setPossibleMoves] = useState([]);
   const [currentPlayer, setCurrentPlayer] = useState(engine.currentPlayer);
-  const [gameOver, setGameOver] = useState(false);
-  const [winner, setWinner] = useState(null);
-  const [isCheck, setIsCheck] = useState(false);
-  const [isCheckmate, setIsCheckmate] = useState(false);
+  const [gameOver, setGameOver] = useState(engine.gameOver);
+  const [winner, setWinner] = useState(engine.winner);
+  const [isCheck, setIsCheck] = useState(engine.isCheck);
+  const [isCheckmate, setIsCheckmate] = useState(engine.isCheckmate);
   const [showPromotionModal, setShowPromotionModal] = useState(false);
   const [pendingMove, setPendingMove] = useState(null);
   const [moveHistory, setMoveHistory] = useState([]);
@@ -99,6 +104,9 @@ const ChessGame = () => {
 
   const getStatusText = () => {
     if (gameOver) {
+      if (winner === 'draw') {
+        return `🤝 EMPATE! Afogamento (Stalemate)`;
+      }
       if (isCheckmate) {
         return `♔ XEQUE-MATE! ${winner === 'white' ? 'Brancas' : 'Pretas'} venceram!`;
       }

@@ -349,11 +349,19 @@ export class ChessEngine {
     
     // Verificar xeque e xeque-mate
     this.isCheck = this.isKingInCheck(this.currentPlayer);
-    this.isCheckmate = this.isCheck && this.hasNoLegalMoves(this.currentPlayer);
+    const hasNoMoves = this.hasNoLegalMoves(this.currentPlayer);
     
-    if (this.isCheckmate) {
+    if (hasNoMoves) {
       this.gameOver = true;
-      this.winner = this.currentPlayer === 'white' ? 'black' : 'white';
+      if (this.isCheck) {
+        // Xeque-mate: jogador que fez o movimento vence
+        this.isCheckmate = true;
+        this.winner = this.currentPlayer === 'white' ? 'black' : 'white';
+      } else {
+        // Afogamento (stalemate): empate
+        this.isCheckmate = false;
+        this.winner = 'draw';
+      }
     }
     
     return true;
@@ -427,6 +435,32 @@ export class ChessEngine {
       }
     }
     return moves;
+  }
+
+  checkGameState() {
+    // Verificar o estado do jogo no início de cada turno
+    this.isCheck = this.isKingInCheck(this.currentPlayer);
+    const hasNoMoves = this.hasNoLegalMoves(this.currentPlayer);
+    
+    if (hasNoMoves) {
+      this.gameOver = true;
+      if (this.isCheck) {
+        // Xeque-mate
+        this.isCheckmate = true;
+        this.winner = this.currentPlayer === 'white' ? 'black' : 'white';
+      } else {
+        // Afogamento (empate)
+        this.isCheckmate = false;
+        this.winner = 'draw';
+      }
+    }
+    
+    return {
+      isCheck: this.isCheck,
+      isCheckmate: this.isCheckmate,
+      gameOver: this.gameOver,
+      winner: this.winner
+    };
   }
 
   resetGame() {
